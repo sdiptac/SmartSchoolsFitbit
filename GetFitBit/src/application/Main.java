@@ -13,13 +13,12 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Runnable getUserRunnable = () -> {
-			System.out.println("something");
 			ArrayList<String[]> auth = Authorization.getAuthorization();
 			String id = auth.get(0)[3];
 			String token = auth.get(0)[2];
-			System.out.println(auth.size());
 			try {
 				UserProfile.getUserProfile(id, token);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

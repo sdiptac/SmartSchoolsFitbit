@@ -1,8 +1,7 @@
 package application;
 
 
-import java.sql.Statement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 
 
@@ -10,15 +9,15 @@ public class Authorization {
 
 	
 	public static ArrayList<String[]> getAuthorization(){
-		Statement statement = null;
-		ResultSet resultset = null;
+		
 		ArrayList<String[]> IDs = new ArrayList<String[]>();
 		try{
 			final String query = "select userID,email,accessToken,fitbitID from user where accessToken is not null and fitbitID is not null";
-			Connector.connect();
 			
-			statement = Connector.connection.createStatement();
-			resultset = statement.executeQuery(query);
+			Connector.connect();
+			PreparedStatement statement= Connector.connection.prepareStatement(query);
+			ResultSet resultset = statement.executeQuery();
+			
             	if(!resultset.next()){
             		System.out.println("No such user found");
             	}else {
@@ -30,6 +29,7 @@ public class Authorization {
             			row[3] = resultset.getString("fitbitID");
             			IDs.add(row);
             		}
+            		System.out.println(IDs);
             	}
             	Connector.disconnect();
 		}catch(Exception e){
