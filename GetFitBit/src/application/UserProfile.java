@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 
 
-public class URLReader {
+public class UserProfile {
 	    public static void getUserProfile(String uId,String aToken) throws Exception {
 
 	        URL url = new URL("https://api.fitbit.com/1/user/" + uId + "/profile.json");

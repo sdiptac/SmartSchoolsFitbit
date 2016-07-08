@@ -14,6 +14,7 @@ public class Connector {
 			connection = DriverManager.getConnection(url,user,password);
 			return true;
 		} catch(Exception e){
+			System.out.println(e.toString());
 			return false;
 		}
 	}
@@ -22,7 +23,8 @@ public class Connector {
 		try {
 			connection.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.toString());
+			
 		}
 	}
 }

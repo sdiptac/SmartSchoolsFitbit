@@ -1,6 +1,6 @@
 package application;
 
-import java.sql.PreparedStatement;
+
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -33,9 +33,9 @@ public class Authorization {
             	}
             	Connector.disconnect();
 		}catch(Exception e){
-            	System.out.println("Database Error");
-            	return IDs;
-		}
+				System.out.println(e.toString());
+        }
+		
 		return IDs;
 	}
 }
