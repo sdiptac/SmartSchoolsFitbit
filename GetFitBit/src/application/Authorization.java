@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Authorization {
 
 	
-	public static ArrayList<String[]> getUserIDs(){
+	public static ArrayList<String[]> getAuthorization(){
 		Statement statement = null;
 		ResultSet resultset = null;
 		ArrayList<String[]> IDs = new ArrayList<String[]>();
