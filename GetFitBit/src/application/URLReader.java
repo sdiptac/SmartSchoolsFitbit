@@ -12,15 +12,10 @@ public class URLReader {
 	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 	        connection.setDoOutput(true);
 	        connection.setRequestMethod("GET");
-	        aToken = Base64.getEncoder().encodeToString(aToken.getBytes("UTF-8"));
+	        
 	        connection.setRequestProperty("Authorization", " Bearer " + aToken);
 	        
-	
-
-	     
-			
-	        
-	        BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+	        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
 	        String inputLine;
 	        while ((inputLine = in.readLine()) != null)
