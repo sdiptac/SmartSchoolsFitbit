@@ -2,13 +2,12 @@ package application;
 
 import java.io.*;
 import java.net.*;
-import java.util.Base64;
 
 
 public class URLReader {
-	    public static void getData(String aToken) throws Exception {
+	    public static void getUserProfile(String uId,String aToken) throws Exception {
 
-	        URL url = new URL("https://api.fitbit.com/1/user/4PBXBQ/profile.json");
+	        URL url = new URL("https://api.fitbit.com/1/user/" + uId + "/profile.json");
 	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 	        connection.setDoOutput(true);
 	        connection.setRequestMethod("GET");
