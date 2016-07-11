@@ -23,19 +23,16 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Runnable getUserRunnable = () -> {
-			ArrayList<String[]> auth = Authorization.getAuthorization();
-			String id = auth.get(0)[1];
-			String token = auth.get(0)[0];
-			try {
-				System.out.println("before daily");
-				ArrayList<Activity> example = DailyActivity.getActivities(id, token, SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
-				System.out.println(example.size());
-				example.stream().forEach(a -> System.out.println(a.toString()));
-			} catch (ParseException e) {
-			}
-			
+			ArrayList<UserProfile> auth = Authorization.getAuthorization();
+			auth.stream().forEach(user -> {
+				try {
+					ArrayList<Activity> example = DailyActivity.getActivities(user.getID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
+
+					example.stream().forEach(a -> System.out.println(a.toString()));
+				} catch (ParseException e) {
+				}
+			});
 		};
-		
 		
 		SCHEDULER.scheduleAtFixedRate(getUserRunnable, 0, REFRESH_TIME, TimeUnit.HOURS);
 	}

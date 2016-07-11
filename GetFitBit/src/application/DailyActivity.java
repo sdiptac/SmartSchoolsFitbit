@@ -2,7 +2,6 @@ package application;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -22,19 +21,19 @@ public class DailyActivity {
 		ArrayList<Activity> activities = new ArrayList<Activity>();
 		
 		ArrayList<String> dateRange = new ArrayList<String>();
+
 		
 		for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
 			dateRange.add(date.format(Main.DATE_TIME_FORMATTER));
 		}
 		
-		dateRange.parallelStream().forEach(date -> {
+		dateRange.stream().forEach(date -> {
 			try{
 				URL url = new URL("https://api.fitbit.com/1/user/" + uId + "/activities/date/" + date + ".json");
 				
-		        BufferedReader in = new BufferedReader(new InputStreamReader(getInputStreamFromURL(url, aToken).getInputStream()));
+		        BufferedReader in = new BufferedReader(new InputStreamReader(getHttpURLConnectionFromURL(url, aToken).getInputStream()));
 		        
 		        String data = in.readLine();
-		        System.out.println(data);
 		        in.close();
 	
 		        final JSONObject object = new JSONObject(data);
@@ -58,7 +57,7 @@ public class DailyActivity {
 	private static int getRestingDaily(String uId,String aToken, String date) throws Exception{
 		URL url = new URL("https://api.fitbit.com/1/user/" + uId +"/activities/heart/date/" + date + "/1d.json");
     
-        BufferedReader in = new BufferedReader(new InputStreamReader(getInputStreamFromURL(url, aToken).getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(getHttpURLConnectionFromURL(url, aToken).getInputStream()));
         
         String data = in.readLine();
         in.close();
@@ -70,7 +69,7 @@ public class DailyActivity {
         return heartObject.getJSONObject("value").getInt("restingHeartRate");
 	}
 	
-	private static HttpURLConnection getInputStreamFromURL(URL url, String aToken) throws IOException{
+	private static HttpURLConnection getHttpURLConnectionFromURL(URL url, String aToken) throws IOException{
 	    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("GET");
