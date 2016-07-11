@@ -12,8 +12,7 @@ public class Authorization {
 		
 		ArrayList<String[]> IDs = new ArrayList<String[]>();
 		try{
-			final String query = "select userID,email,accessToken,fitbitID from user where accessToken is not null and fitbitID is not null";
-			
+			final String query = "select accessToken,fitbitID from user where accessToken is not null and fitbitID is not null";
 			Connector.connect();
 			PreparedStatement statement= Connector.connection.prepareStatement(query);
 			ResultSet resultset = statement.executeQuery();
@@ -21,15 +20,12 @@ public class Authorization {
             	if(!resultset.next()){
             		System.out.println("No such user found");
             	}else {
-            		while(resultset.next()){
-            			String[] row = new String[4];
-            			row[0] = resultset.getString("userID");
-            			row[1] = resultset.getString("email");
-            			row[2] = resultset.getString("accessToken");
-            			row[3] = resultset.getString("fitbitID");
+            		do{
+            			String[] row = new String[2];
+            			row[0] = resultset.getString("accessToken");
+            			row[1] = resultset.getString("fitbitID");
             			IDs.add(row);
-            		}
-            		System.out.println(IDs);
+            		}while(resultset.next());
             	}
             	Connector.disconnect();
 		}catch(Exception e){
