@@ -31,7 +31,7 @@ public class DailyActivity {
 			try{
 				URL url = new URL("https://api.fitbit.com/1/user/" + uId + "/activities/date/" + date + ".json");
 				
-		        BufferedReader in = new BufferedReader(new InputStreamReader(getInputStreamFromURL(url, aToken).getInputStream()));
+		        BufferedReader in = new BufferedReader(new InputStreamReader(getHttpURLConnectionFromURL(url, aToken).getInputStream()));
 		        
 		        String data = in.readLine();
 		        in.close();
@@ -57,7 +57,7 @@ public class DailyActivity {
 	private static int getRestingDaily(String uId,String aToken, String date) throws Exception{
 		URL url = new URL("https://api.fitbit.com/1/user/" + uId +"/activities/heart/date/" + date + "/1d.json");
     
-        BufferedReader in = new BufferedReader(new InputStreamReader(getInputStreamFromURL(url, aToken).getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(getHttpURLConnectionFromURL(url, aToken).getInputStream()));
         
         String data = in.readLine();
         in.close();
@@ -69,7 +69,7 @@ public class DailyActivity {
         return heartObject.getJSONObject("value").getInt("restingHeartRate");
 	}
 	
-	private static HttpURLConnection getInputStreamFromURL(URL url, String aToken) throws IOException{
+	private static HttpURLConnection getHttpURLConnectionFromURL(URL url, String aToken) throws IOException{
 	    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("GET");
