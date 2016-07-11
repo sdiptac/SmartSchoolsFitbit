@@ -47,9 +47,9 @@ public class DailyActivity {
 		        }catch(Exception e){
 		        }
 		        
-		        activities.add(new Activity(summary.getInt("activityCalories"), summary.getInt("steps"), summary.getInt("floors"), restingHeartRate));
+		        activities.add(new Activity(date, summary.getInt("activityCalories"), summary.getInt("steps"), summary.getInt("floors"), restingHeartRate));
 			}catch(Exception e){
-		     }
+		    }
 		});
 		
 		return activities;
