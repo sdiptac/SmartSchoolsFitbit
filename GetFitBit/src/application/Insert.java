@@ -18,21 +18,22 @@ public class Insert {
 			floors = e.getFloors();
 			steps = e.getSteps();
 			restingHeartRate = e.getRestingHeartRate();
-		}
-		try{
-			Connector.connect();
-			final String query = "insert into dailyActivity values (?,?,?,?,?,?)";
-			PreparedStatement statement= Connector.connection.prepareStatement(query);
-			statement.setInt(1, deviceId);
-			statement.setInt(2, calories);
-			statement.setInt(3, steps);
-			statement.setInt(4, floors);
-			statement.setInt(5, restingHeartRate);
-			statement.setString(6, date);
-			statement.executeUpdate();
-			
-		} catch (SQLException e) {
-			System.out.println(e.toString());
+		
+			try{
+				Connector.connect();
+				final String query = "insert into dailyActivity values (?,?,?,?,?,?)";
+				PreparedStatement statement= Connector.connection.prepareStatement(query);
+				statement.setInt(1, deviceId);
+				statement.setInt(2, calories);
+				statement.setInt(3, steps);
+				statement.setInt(4, floors);
+				statement.setInt(5, restingHeartRate);
+				statement.setString(6, date);
+				statement.executeUpdate();
+				
+			} catch (SQLException ex) {
+				System.out.println(ex.toString());
+			}
 		}
 	}
 }
