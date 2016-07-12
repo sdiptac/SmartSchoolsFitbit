@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class DeviceInfo {
 	public static int getDeviceId(String userId, Device device){
 		int deviceID = 0;
+		Connector.connect();
 		try{
-			Connector.connect();
 			final String query = "select deviceID from user_device natural join device where userId = ? and typeOfDevice = ?";
 			PreparedStatement statement= Connector.connection.prepareStatement(query);
 			
@@ -21,11 +21,10 @@ public class DeviceInfo {
 			}else{
 				deviceID = resultset.getInt("deviceID");
 			}
-			
 		} catch (SQLException ex) {
 			System.out.println(ex.toString());
 		}
+		Connector.disconnect();
 		return deviceID;
 	}
-	
 }
