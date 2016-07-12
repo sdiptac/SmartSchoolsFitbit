@@ -24,10 +24,7 @@ public class Activity{
 	public int getFloors() {
 		return floors;
 	}
-	public void setFloors(int floors) {
-		this.floors = floors;
-	}
-
+	
 	public int getRestingHeartRate() {
 		return restingHeartRate;
 	}

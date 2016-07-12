@@ -20,7 +20,7 @@ public class Insert {
 			restingHeartRate = e.getRestingHeartRate();
 		
 			try{
-				Connector.connect();
+				
 				final String query = "insert into dailyActivity values (?,?,?,?,?,?)";
 				PreparedStatement statement= Connector.connection.prepareStatement(query);
 				statement.setInt(1, deviceId);
@@ -43,7 +43,6 @@ public class Insert {
 		int minutesAsleep = 0;
 		int sleepRecords = 0;
 		int timeInBed = 0;
-		
 		for (Sleep e : sleepArray){
 			timeStamp = e.getTimeStamp();
 			restlessCount = e.getRestlessCount();
@@ -53,7 +52,7 @@ public class Insert {
 			timeInBed = e.getTimeInBed();
 		
 			try{
-				Connector.connect();
+				
 				final String query = "insert into sleep values (?,?,?,?,?,?,?)";
 				PreparedStatement statement= Connector.connection.prepareStatement(query);
 				statement.setInt(1, deviceId);
@@ -68,6 +67,28 @@ public class Insert {
 			} catch (SQLException ex) {
 				System.out.println(ex.toString());
 			}
+		}
+	}
+	public static void insertHRPM(int deviceId, ArrayList<ArrayList<HeartRate>> hrPerDay){
+		String timeStamp = null;
+		int hrPerMin = 0;
+		for (ArrayList<HeartRate> a : hrPerDay){
+			for (HeartRate h : a){
+				timeStamp = h.getTimeStamp();
+				hrPerMin = h.getAvgHeartRate();
+				try{
+					final String query = "insert into heartRate values (?,?,?)";
+					PreparedStatement statement= Connector.connection.prepareStatement(query);
+					statement.setInt(1, deviceId);
+					statement.setString(2, timeStamp);
+					statement.setInt(3, hrPerMin);
+					statement.executeUpdate();
+					
+				} catch (SQLException ex) {
+					System.out.println(ex.toString());
+				}
+			}
+			
 		}
 	}
 }
