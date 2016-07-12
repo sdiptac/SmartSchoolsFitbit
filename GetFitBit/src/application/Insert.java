@@ -3,7 +3,6 @@ package application;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.sql.Date;
 
 public class Insert {
 	public static void insertDailyActivity(int deviceId, ArrayList<Activity> activityArray){
@@ -55,7 +54,7 @@ public class Insert {
 		
 			try{
 				Connector.connect();
-				final String query = "insert into sleep values (?,?,?,?,?,?)";
+				final String query = "insert into sleep values (?,?,?,?,?,?,?)";
 				PreparedStatement statement= Connector.connection.prepareStatement(query);
 				statement.setInt(1, deviceId);
 				statement.setString(2, timeStamp);
@@ -63,6 +62,7 @@ public class Insert {
 				statement.setInt(4, timeInBed);
 				statement.setInt(5, restlessCount);
 				statement.setInt(6, restlessDuration);
+				statement.setInt(7, sleepRecords);
 				statement.executeUpdate();
 				
 			} catch (SQLException ex) {
