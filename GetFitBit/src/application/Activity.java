@@ -39,5 +39,4 @@ public class Activity{
 	public String toString(){
 		return String.format("ActivityCalories: %d, Steps: %d, Floors: %d, RestingHeartRate: %d", activityCalories, steps, floors, restingHeartRate);
 	}
-
 }

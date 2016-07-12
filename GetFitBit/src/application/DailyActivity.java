@@ -1,18 +1,17 @@
 package application;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class DailyActivity {
+public class DailyActivity extends GetInfoFromFitbit{
 	
 	public static ArrayList<Activity> getActivities(String uId,String aToken, Date startDate, Date endDate){
 		LocalDate start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -67,14 +66,5 @@ public class DailyActivity {
         final JSONObject heartObject = heart.getJSONObject(0);
         
         return heartObject.getJSONObject("value").getInt("restingHeartRate");
-	}
-	
-	private static HttpURLConnection getHttpURLConnectionFromURL(URL url, String aToken) throws IOException{
-	    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setDoOutput(true);
-        connection.setRequestMethod("GET");
-        
-        connection.setRequestProperty("Authorization", " Bearer " + aToken);
-        return connection;
 	}
 }
