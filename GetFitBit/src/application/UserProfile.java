@@ -11,7 +11,7 @@ public class UserProfile {
 		this.userID = userID;
 	}
 	
-	public String getID(){
+	public String getfitbitID(){
 		return this.fitbitID;
 	}
 	

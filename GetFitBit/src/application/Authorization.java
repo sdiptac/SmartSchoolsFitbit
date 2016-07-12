@@ -11,7 +11,7 @@ public class Authorization {
 		
 		ArrayList<UserProfile> IDs = new ArrayList<UserProfile>();
 		try{
-			final String query = "select accessToken,fitbitID, userID from user where accessToken is not null and fitbitID is not null";
+			final String query = "select accessToken,fitbitID,userID from user where accessToken is not null and fitbitID is not null";
 			Connector.connect();
 			PreparedStatement statement= Connector.connection.prepareStatement(query);
 			ResultSet resultset = statement.executeQuery();

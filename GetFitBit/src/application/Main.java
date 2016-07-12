@@ -26,7 +26,7 @@ public class Main {
 			ArrayList<UserProfile> auth = Authorization.getAuthorization();
 			auth.stream().forEach(user -> {
 				try {
-					getAndPrintExampleActivities(user.getID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
+					getAndPrintExampleActivities(user.getUserID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
 					//getAndPrintExampleSleeps(user.getID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
 				} catch (ParseException e) {
 				}

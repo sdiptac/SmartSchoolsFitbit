@@ -9,7 +9,7 @@ public class DeviceInfo {
 		int deviceID = 0;
 		Connector.connect();
 		try{
-			final String query = "select deviceID from user_device natural join device where userId = ? and typeOfDevice = ?";
+			final String query = "select deviceID from user_device natural join device where userID = ? and typeOfDevice = ?";
 			PreparedStatement statement= Connector.connection.prepareStatement(query);
 			
 			statement.setString(1, userId);
@@ -25,6 +25,8 @@ public class DeviceInfo {
 			System.out.println(ex.toString());
 		}
 		Connector.disconnect();
+		
 		return deviceID;
+		
 	}
 }
