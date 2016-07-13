@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class HRPerMinute extends GetInfoFromFitbit{
 	
-	public static ArrayList<ArrayList<HeartRate>> getHRs(String uId,String aToken, Date startDate, Date endDate){
+	public static ArrayList<ArrayList<HeartRate>> getHRs(String fitbitId,String aToken, Date startDate, Date endDate){
 		LocalDate start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate end = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		
@@ -28,7 +28,7 @@ public class HRPerMinute extends GetInfoFromFitbit{
 		
 		dateRange.stream().forEach(date -> {
 			try{    
-				HRs.add(getHR(uId, aToken, date));
+				HRs.add(getHR(fitbitId, aToken, date));
 			}catch(Exception e){
 		    }
 		});

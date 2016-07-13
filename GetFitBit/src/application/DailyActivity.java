@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class DailyActivity extends GetInfoFromFitbit{
 	
-	public static ArrayList<Activity> getActivities(String uId,String aToken, Date startDate, Date endDate){
+	public static ArrayList<Activity> getActivities(String fitbitId,String aToken, Date startDate, Date endDate){
 		LocalDate start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate end = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		
@@ -28,7 +28,7 @@ public class DailyActivity extends GetInfoFromFitbit{
 		
 		dateRange.stream().forEach(date -> {
 			try{
-				URL url = new URL("https://api.fitbit.com/1/user/" + uId + "/activities/date/" + date + ".json");
+				URL url = new URL("https://api.fitbit.com/1/user/" + fitbitId + "/activities/date/" + date + ".json");
 				
 		        BufferedReader in = new BufferedReader(new InputStreamReader(getHttpURLConnectionFromURL(url, aToken).getInputStream()));
 		        
@@ -41,7 +41,7 @@ public class DailyActivity extends GetInfoFromFitbit{
 		        int restingHeartRate = 0;
 		        
 		        try{
-		        	restingHeartRate = getRestingDaily(uId, aToken, date);
+		        	restingHeartRate = getRestingDaily(fitbitId, aToken, date);
 		        }catch(Exception e){
 		        }
 		        

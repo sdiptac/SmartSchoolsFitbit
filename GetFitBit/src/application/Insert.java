@@ -12,6 +12,8 @@ public class Insert {
 		int steps = 0;
 		int restingHeartRate = 0;
 		
+		System.out.println("size of activity array "+activityArray.size());
+		
 		for (Activity e : activityArray){
 			calories = e.getActivityCalories();
 			date = e.getDate();
@@ -29,7 +31,11 @@ public class Insert {
 				statement.setInt(4, floors);
 				statement.setInt(5, restingHeartRate);
 				statement.setString(6, date);
-				statement.executeUpdate();
+				if(statement.executeUpdate() == 1){
+					System.out.println("uploaded");
+				}else{
+					System.out.println("could not upload");
+				}
 				Connector.disconnect();
 				
 			} catch (SQLException ex) {

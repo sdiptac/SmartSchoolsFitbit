@@ -16,13 +16,11 @@ public class DeviceInfo {
 			statement.setString(2, device.toString());
 			
 			ResultSet resultset = statement.executeQuery();
-			if(!resultset.next()){
-        		System.out.println("No linked device found");
-			}else{
-				deviceID = resultset.getInt("deviceID");
-			}
+			resultset.next();
+			deviceID = resultset.getInt("deviceID");
+			System.out.println(deviceID);
 		} catch (SQLException ex) {
-			System.out.println(ex.toString());
+			System.out.println("class device info " + ex.toString());
 		}
 		Connector.disconnect();
 		

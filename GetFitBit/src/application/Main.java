@@ -26,7 +26,7 @@ public class Main {
 			ArrayList<UserProfile> auth = Authorization.getAuthorization();
 			auth.stream().forEach(user -> {
 				try {
-					getAndPrintExampleActivities(user.getUserID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
+					getAndPrintExampleActivities(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
 					//getAndPrintExampleSleeps(user.getID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
 				} catch (ParseException e) {
 				}
@@ -36,13 +36,14 @@ public class Main {
 		SCHEDULER.scheduleAtFixedRate(getUserRunnable, 0, REFRESH_TIME, TimeUnit.HOURS);
 	}
 	
-	public static void getAndPrintExampleActivities(String uID, String aToken, Date startDate, Date endDate){
-		ArrayList<Activity> example = DailyActivity.getActivities(uID, aToken, startDate, endDate);
-		Insert.insertDailyActivity(DeviceInfo.getDeviceId(uID, Device.fitbit), example);
+	public static void getAndPrintExampleActivities(String userID, String fitbitID, String aToken, Date startDate, Date endDate){
+		ArrayList<Activity> example = DailyActivity.getActivities(fitbitID, aToken, startDate, endDate);
+		
+		Insert.insertDailyActivity(DeviceInfo.getDeviceId(userID, Device.fitbit), example);
 	}
 	
-	public static void getAndPrintExampleSleeps(String uID, String aToken, Date startDate, Date endDate){
-		ArrayList<Sleep> example = DailySleep.getSleeps(uID, aToken, startDate, endDate);
+	public static void getAndPrintExampleSleeps(String fitbitID, String aToken, Date startDate, Date endDate){
+		ArrayList<Sleep> example = DailySleep.getSleeps(fitbitID, aToken, startDate, endDate);
 		example.stream().forEach(a -> System.out.println(a.toString()));
 	}
 }

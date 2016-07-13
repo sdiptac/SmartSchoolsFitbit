@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class DailySleep extends GetInfoFromFitbit{
 	
-	public static ArrayList<Sleep> getSleeps(String uId,String aToken, Date startDate, Date endDate){
+	public static ArrayList<Sleep> getSleeps(String fitbitId,String aToken, Date startDate, Date endDate){
 		LocalDate start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate end = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		
@@ -28,7 +28,7 @@ public class DailySleep extends GetInfoFromFitbit{
 		
 		dateRange.stream().forEach(date -> {
 			try{    
-				sleeps.add(getSleep(uId, aToken, date));
+				sleeps.add(getSleep(fitbitId, aToken, date));
 			}catch(Exception e){
 		    }
 		});
