@@ -48,15 +48,16 @@ public class Insert {
 			int timeInBed = e.getTimeInBed();
 		
 			try{
-				final String query = "insert into sleep(deviceID, startTimeOfSleep, sleepDuration, inBedDuration, restlessCount, restlessDuration, sleepRecords) values (?,?,?,?,?,?,?)";
+				final String query = "insert into sleep(deviceID, startTimeOfSleep, dayOfSleep, sleepDuration, inBedDuration, restlessCount, restlessDuration, sleepRecords) values (?,?,?,?,?,?,?,?)";
 				PreparedStatement statement= Connector.connection.prepareStatement(query);
 				statement.setInt(1, deviceId);
 				statement.setString(2, timeStamp);
-				statement.setInt(3, minutesAsleep);
-				statement.setInt(4, timeInBed);
-				statement.setInt(5, restlessCount);
-				statement.setInt(6, restlessDuration);
-				statement.setInt(7, sleepRecords);
+				statement.setString(3, e.getDate());
+				statement.setInt(4, minutesAsleep);
+				statement.setInt(5, timeInBed);
+				statement.setInt(6, restlessCount);
+				statement.setInt(7, restlessDuration);
+				statement.setInt(8, sleepRecords);
 				statement.executeUpdate();
 			} catch (SQLException ex) {
 				System.out.println("insertSleep() " + ex.toString());

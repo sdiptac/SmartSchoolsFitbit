@@ -7,8 +7,10 @@ public class Sleep {
    private int minutesAsleep = 0;
    private int sleepRecords = 0;
    private int timeInBed = 0;
+   private String date;
    
-   public Sleep(String timeStamp, int restlessCount, int restlessDuration, int minutesAsleep, int sleepRecords, int timeInBed){
+   public Sleep(String timeStamp, String date, int restlessCount, int restlessDuration, int minutesAsleep, int sleepRecords, int timeInBed){
+	   this.date = date;
 	   this.timeStamp = timeStamp;
 	   this.restlessCount = restlessCount;
 	   this.restlessDuration = restlessDuration;
@@ -19,6 +21,10 @@ public class Sleep {
 
 	public String getTimeStamp() {
 		return timeStamp;
+	}
+	
+	public String getDate() {
+		return date;
 	}
 
 	public int getRestlessCount() {

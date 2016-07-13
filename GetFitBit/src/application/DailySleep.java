@@ -53,19 +53,20 @@ public class DailySleep extends GetInfoFromFitbit{
 	    
         for (int i = 0; i < sleep.length(); ++i){
         	JSONObject allSleep = sleep.getJSONObject(i);
-        	String isMainSleep	= allSleep.getString("isMainSleep");
-        	if(isMainSleep.equals("true")){
+        	Boolean isMainSleep	= allSleep.getBoolean("isMainSleep");
+        	
+        	if(isMainSleep){
         		timeStamp = allSleep.getString("startTime");
         		restlessCount = allSleep.getInt("restlessCount");
         		restlessDuration = allSleep.getInt("restlessCount");
         		break;
         	}
         }
-        System.out.println(timeStamp + " " + restlessCount + " " + restlessDuration);
+
         final JSONObject sleepSummary = new JSONObject(data).getJSONObject("summary");
         
         if(timeStamp != null && !timeStamp.isEmpty()){
-        	return new Sleep(timeStamp, restlessCount, restlessDuration, sleepSummary.getInt("totalMinutesAsleep"), sleepSummary.getInt("totalSleepRecords"), sleepSummary.getInt("totalTimeInBed"));        	
+        	return new Sleep(timeStamp, date, restlessCount, restlessDuration, sleepSummary.getInt("totalMinutesAsleep"), sleepSummary.getInt("totalSleepRecords"), sleepSummary.getInt("totalTimeInBed"));        	
         }else{
         	return null;
         } 
