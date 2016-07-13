@@ -37,14 +37,14 @@ public class DailySleep extends GetInfoFromFitbit{
 		return sleeps;
 	}
 	
-	public static Sleep getSleep(String uId,String aToken, String date) throws Exception{    
-		URL url = new URL("https://api.fitbit.com/1/user/"+ uId + "/sleep/date/" + date + ".json");
+	public static Sleep getSleep(String fitbitId,String aToken, String date) throws Exception{    
+		URL url = new URL("https://api.fitbit.com/1/user/"+ fitbitId + "/sleep/date/" + date + ".json");
        
 		BufferedReader in = new BufferedReader(new InputStreamReader(getHttpURLConnectionFromURL(url, aToken).getInputStream()));
         
         String data = in.readLine();
         in.close();
-
+        System.out.println(data);
         final JSONArray sleep = new JSONObject(data).getJSONArray("sleep");
         
         String timeStamp = null;
@@ -61,7 +61,7 @@ public class DailySleep extends GetInfoFromFitbit{
         		break;
         	}
         }
-        
+        System.out.println(timeStamp + " " + restlessCount + " " + restlessDuration);
         final JSONObject sleepSummary = new JSONObject(data).getJSONObject("summary");
         
         if(timeStamp != null && !timeStamp.isEmpty()){

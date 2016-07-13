@@ -18,7 +18,7 @@ public class Main {
 	public final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	private final static String exampleStartDate = "2016-7-12";
-	private final static String exampleEndDate = "2016-07-13";
+	private final static String exampleEndDate = "2016-07-14";
 	
 	public static void main(String[] args) {
 		
