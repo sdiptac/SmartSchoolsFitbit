@@ -23,8 +23,8 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Runnable getUserRunnable = () -> {
-			ArrayList<UserProfile> auth = Authorization.getAuthorization();
-			auth.stream().forEach(user -> {
+			ArrayList<UserProfile> users = Authorization.getAuthorization();
+			users.stream().forEach(user -> {
 				try {
 					getAndPrintExampleActivities(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
 					//getAndPrintExampleSleeps(user.getID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));

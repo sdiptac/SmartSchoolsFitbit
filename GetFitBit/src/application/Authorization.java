@@ -11,7 +11,7 @@ public class Authorization {
 		
 		ArrayList<UserProfile> IDs = new ArrayList<UserProfile>();
 		try{
-			final String query = "select accessToken,fitbitID,userID from user where accessToken is not null and fitbitID is not null";
+			final String query = "select accessToken, fitbitID, userID from user natural join user_device natural join device where accessToken is not null and fitbitID is not null and typeOfDevice = 'fitbit'";
 			Connector.connect();
 			PreparedStatement statement= Connector.connection.prepareStatement(query);
 			ResultSet resultset = statement.executeQuery();
@@ -32,16 +32,18 @@ public class Authorization {
 		return IDs;
 	}
 	
-	public static Date getMostRecentSync(String uID){
-		final String query = "select accessToken,fitbitID, userID from user where accessToken is not null and fitbitID is not null";
+	public static Date getMostRecentSync(String userID){
+		final String query = "select accessToken, fitbitID, userID from user natural join user_device natural join device where accessToken is not null and fitbitID is not null and typeOfDevice = 'fitbit' and userID = ?";
 		Connector.connect();
 		PreparedStatement statement;
 		try {
 			statement = Connector.connection.prepareStatement(query);
+			statement.setString(1, userID);
 			ResultSet resultset = statement.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		Connector.disconnect();
 		return null;
 	}
 }

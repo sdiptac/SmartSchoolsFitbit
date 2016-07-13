@@ -6,24 +6,16 @@ import java.util.ArrayList;
 
 public class Insert {
 	public static void insertDailyActivity(int deviceId, ArrayList<Activity> activityArray){
-		int calories = 0;
-		String date = null;
-		int floors = 0;
-		int steps = 0;
-		int restingHeartRate = 0;
-		
-		System.out.println("size of activity array "+activityArray.size());
-		
+		Connector.connect();
 		for (Activity e : activityArray){
-			calories = e.getActivityCalories();
-			date = e.getDate();
-			floors = e.getFloors();
-			steps = e.getSteps();
-			restingHeartRate = e.getRestingHeartRate();
+			int calories = e.getActivityCalories();
+			String date = e.getDate();
+			int floors = e.getFloors();
+			int steps = e.getSteps();
+			int restingHeartRate = e.getRestingHeartRate();
 		
 			try{
-				Connector.connect();
-				final String query = "insert into dailyActivity values (?,?,?,?,?,?)";
+				final String query = "insert into dailyActivity(deviceID, calories, stepCount, floors, restingHR, dayOfActivity) values (?,?,?,?,?,?)";
 				PreparedStatement statement= Connector.connection.prepareStatement(query);
 				statement.setInt(1, deviceId);
 				statement.setInt(2, calories);
@@ -36,31 +28,25 @@ public class Insert {
 				}else{
 					System.out.println("could not upload");
 				}
-				Connector.disconnect();
 				
 			} catch (SQLException ex) {
-				System.out.println(ex.toString());
+				System.out.println("insertDailyActivity() " + ex.toString());
 			}
 		}
+		Connector.disconnect();
 	}
-	public static void insertSleep(int deviceId, ArrayList<Sleep> sleepArray){
-		String timeStamp = null;
-		int restlessCount = 0;
-		int restlessDuration = 0;
-		int minutesAsleep = 0;
-		int sleepRecords = 0;
-		int timeInBed = 0;
+	public static void insertSleep(int deviceId, ArrayList<Sleep> sleepArray){		
+		Connector.connect();
 		for (Sleep e : sleepArray){
-			timeStamp = e.getTimeStamp();
-			restlessCount = e.getRestlessCount();
-			restlessDuration = e.getRestlessDuration();
-			minutesAsleep = e.getMinutesAsleep();
-			sleepRecords = e.getSleepRecords();
-			timeInBed = e.getTimeInBed();
+			String timeStamp = e.getTimeStamp();
+			int restlessCount = e.getRestlessCount();
+			int restlessDuration = e.getRestlessDuration();
+			int minutesAsleep = e.getMinutesAsleep();
+			int sleepRecords = e.getSleepRecords();
+			int timeInBed = e.getTimeInBed();
 		
 			try{
-				Connector.connect();
-				final String query = "insert into sleep values (?,?,?,?,?,?,?)";
+				final String query = "insert into sleep(deviceID, startTimeOfSleep, sleepDuration, inBedDuration, restlessCount, restlessDuration, sleepRecords) values (?,?,?,?,?,?,?)";
 				PreparedStatement statement= Connector.connection.prepareStatement(query);
 				statement.setInt(1, deviceId);
 				statement.setString(2, timeStamp);
@@ -70,33 +56,30 @@ public class Insert {
 				statement.setInt(6, restlessDuration);
 				statement.setInt(7, sleepRecords);
 				statement.executeUpdate();
-				Connector.disconnect();
 			} catch (SQLException ex) {
-				System.out.println(ex.toString());
+				System.out.println("insertSleep() " + ex.toString());
 			}
 		}
+		Connector.disconnect();
 	}
 	public static void insertHRPM(int deviceId, ArrayList<ArrayList<HeartRate>> hrPerDay){
-		String timeStamp = null;
-		int hrPerMin = 0;
+		Connector.connect();
 		for (ArrayList<HeartRate> a : hrPerDay){
 			for (HeartRate h : a){
-				timeStamp = h.getTimeStamp();
-				hrPerMin = h.getAvgHeartRate();
+				String timeStamp = h.getTimeStamp();
+				int hrPerMin = h.getAvgHeartRate();
 				try{
-					Connector.connect();
-					final String query = "insert into heartRate values (?,?,?)";
+					final String query = "insert into heartRate(deviceID,timeOfHR,BPM) values (?,?,?)";
 					PreparedStatement statement= Connector.connection.prepareStatement(query);
 					statement.setInt(1, deviceId);
 					statement.setString(2, timeStamp);
 					statement.setInt(3, hrPerMin);
 					statement.executeUpdate();
-					Connector.disconnect();
 				} catch (SQLException ex) {
-					System.out.println(ex.toString());
+					System.out.println("insertHRPM() " +ex.toString());
 				}
-			}
-			
+			}	
 		}
+		Connector.disconnect();
 	}
 }
