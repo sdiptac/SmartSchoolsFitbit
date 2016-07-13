@@ -33,13 +33,18 @@ public class Authorization {
 	}
 	
 	public static Date getMostRecentSync(String userID){
-		final String query = "select accessToken, fitbitID, userID from user natural join user_device natural join device where accessToken is not null and fitbitID is not null and typeOfDevice = 'fitbit' and userID = ?";
+		final String query = "select accessToken, fitbitID, userID, dayOfActivity from user natural join user_device natural join device natural join dailyActivity where accessToken is not null and fitbitID is not null and typeOfDevice = 'fitbit' and userID = ?";
 		Connector.connect();
 		PreparedStatement statement;
 		try {
 			statement = Connector.connection.prepareStatement(query);
 			statement.setString(1, userID);
 			ResultSet resultset = statement.executeQuery();
+			if(!resultset.next()){
+        		return null;
+        	}else{
+        		
+        	}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

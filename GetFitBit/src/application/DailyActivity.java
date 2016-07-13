@@ -27,7 +27,7 @@ public class DailyActivity extends GetInfoFromFitbit{
 		}
 		
 		dateRange.stream().forEach(date -> {
-			try{
+			try{				
 				URL url = new URL("https://api.fitbit.com/1/user/" + fitbitId + "/activities/date/" + date + ".json");
 				
 		        BufferedReader in = new BufferedReader(new InputStreamReader(getHttpURLConnectionFromURL(url, aToken).getInputStream()));
@@ -39,13 +39,18 @@ public class DailyActivity extends GetInfoFromFitbit{
 		        final JSONObject summary = object.getJSONObject("summary");
 		        
 		        int restingHeartRate = 0;
+		        int calories = summary.getInt("activityCalories");
+		        int steps = summary.getInt("steps");
+		        int floors = summary.getInt("floors");
 		        
 		        try{
 		        	restingHeartRate = getRestingDaily(fitbitId, aToken, date);
 		        }catch(Exception e){
 		        }
 		        
-		        activities.add(new Activity(date, summary.getInt("activityCalories"), summary.getInt("steps"), summary.getInt("floors"), restingHeartRate));
+		        if(restingHeartRate != 0 || calories != 0 || steps != 0 || floors != 0){
+		        	activities.add(new Activity(date, calories, steps, floors, restingHeartRate));		        	
+		        }
 			}catch(Exception e){
 		    }
 		});

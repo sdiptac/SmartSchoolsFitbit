@@ -21,14 +21,16 @@ public class DailySleep extends GetInfoFromFitbit{
 		
 		ArrayList<String> dateRange = new ArrayList<String>();
 
-		
 		for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
 			dateRange.add(date.format(Main.DATE_TIME_FORMATTER));
 		}
 		
 		dateRange.stream().forEach(date -> {
 			try{    
-				sleeps.add(getSleep(fitbitId, aToken, date));
+				Sleep sleep = getSleep(fitbitId, aToken, date);
+				if(sleep != null){
+					sleeps.add(sleep);					
+				}
 			}catch(Exception e){
 		    }
 		});
@@ -61,6 +63,11 @@ public class DailySleep extends GetInfoFromFitbit{
         }
         
         final JSONObject sleepSummary = new JSONObject(data).getJSONObject("summary");
-        return new Sleep(timeStamp, restlessCount, restlessDuration, sleepSummary.getInt("totalMinutesAsleep"), sleepSummary.getInt("totalSleepRecords"), sleepSummary.getInt("totalTimeInBed"));
+        
+        if(timeStamp != null && !timeStamp.isEmpty()){
+        	return new Sleep(timeStamp, restlessCount, restlessDuration, sleepSummary.getInt("totalMinutesAsleep"), sleepSummary.getInt("totalSleepRecords"), sleepSummary.getInt("totalTimeInBed"));        	
+        }else{
+        	return null;
+        } 
 	}
 }

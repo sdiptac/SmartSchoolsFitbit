@@ -53,7 +53,7 @@ public class HRPerMinute extends GetInfoFromFitbit{
         	JSONObject allHRPM = HRPM.getJSONObject(i);
         	timeStamp = allHRPM.getString("time");
         	heartRate = allHRPM.getInt("value");
-        	HRPerDay.add(new HeartRate(date + " " + timeStamp,heartRate));
+        	HRPerDay.add(new HeartRate(date + " " + timeStamp, heartRate, date));
         }
 
     	return HRPerDay;
