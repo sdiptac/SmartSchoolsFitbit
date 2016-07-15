@@ -6,6 +6,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.json.JSONArray;
@@ -66,7 +67,9 @@ public class DailySleep extends GetInfoFromFitbit{
         final JSONObject sleepSummary = new JSONObject(data).getJSONObject("summary");
         
         if(timeStamp != null && !timeStamp.isEmpty()){
-        	return new Sleep(timeStamp, date, restlessCount, restlessDuration, sleepSummary.getInt("totalMinutesAsleep"), sleepSummary.getInt("totalSleepRecords"), sleepSummary.getInt("totalTimeInBed"));        	
+        	Date sqlDate = Main.DATE_TO_SQL_TIMESTAMP_FORMATTER.parse(timeStamp.replace('T', ' '));
+        	return new Sleep(Main.DATE_TO_SQL_TIMESTAMP_FORMATTER.format(sqlDate), date, restlessCount, restlessDuration, sleepSummary.getInt("totalMinutesAsleep"), sleepSummary.getInt("totalSleepRecords"), sleepSummary.getInt("totalTimeInBed"));        	
+
         }else{
         	return null;
         } 

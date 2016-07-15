@@ -2,6 +2,9 @@ package application;
 
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -32,23 +35,30 @@ public class Authorization {
 		return IDs;
 	}
 	
-	public static Date getMostRecentSync(String userID){
-		final String query = "select accessToken, fitbitID, userID, dayOfActivity from user natural join user_device natural join device natural join dailyActivity where accessToken is not null and fitbitID is not null and typeOfDevice = 'fitbit' and userID = ?";
+	public static java.util.Date getMostRecentSync(String userID){
+		final String query = "select dayOfActivity from user natural join user_device natural join device natural join dailyActivity where accessToken is not null and fitbitID is not null and typeOfDevice = 'fitbit' and userID = ? order by dayOfActivity desc limit 1";
 		Connector.connect();
 		PreparedStatement statement;
 		try {
 			statement = Connector.connection.prepareStatement(query);
 			statement.setString(1, userID);
 			ResultSet resultset = statement.executeQuery();
+			String date;
 			if(!resultset.next()){
-        		return null;
+				return new java.util.Date();
         	}else{
-        		
+        		date = resultset.getString(1);
         	}
+			if(date != null && !date.isEmpty()){
+				return Main.SIMPLE_DATE_FORMATTER.parse(date);
+			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch (ParseException e) {
 			e.printStackTrace();
 		}
 		Connector.disconnect();
-		return null;
+
+		return new java.util.Date();
 	}
 }

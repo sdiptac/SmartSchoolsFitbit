@@ -1,6 +1,5 @@
 package application;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ public class Main {
 	private final static ScheduledExecutorService SCHEDULER = Executors.newScheduledThreadPool(1);
 	private final static int REFRESH_TIME = 1;
 	
+	public final static SimpleDateFormat DATE_TO_SQL_TIMESTAMP_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public final static SimpleDateFormat SIMPLE_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 	public final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
@@ -28,7 +28,8 @@ public class Main {
 				try {
 					//getAndPrintExampleActivities(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
 					getAndPrintExampleSleeps(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
-				} catch (ParseException e) {
+					//Authorization.getMostRecentSync(user.getUserID());
+				} catch (Exception e) {
 				}
 			});
 		};
