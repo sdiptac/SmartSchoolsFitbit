@@ -17,8 +17,8 @@ public class Main {
 	public final static SimpleDateFormat SIMPLE_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 	public final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
-	private final static String exampleStartDate = "2016-7-12";
-	private final static String exampleEndDate = "2016-07-14";
+	private final static String exampleStartDate = "2016-7-11";
+	private final static String exampleEndDate = "2016-07-15";
 	
 	public static void main(String[] args) {
 		
@@ -26,9 +26,10 @@ public class Main {
 			ArrayList<UserProfile> users = Authorization.getAuthorization();
 			users.stream().forEach(user -> {
 				try {
-					//getAndPrintExampleActivities(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
+					getAndPrintExampleActivities(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
 					getAndPrintExampleSleeps(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
 					//Authorization.getMostRecentSync(user.getUserID());
+					getAndPrintExampleHRs(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
 				} catch (Exception e) {
 				}
 			});
@@ -47,5 +48,10 @@ public class Main {
 		ArrayList<Sleep> example = DailySleep.getSleeps(fitbitID, aToken, startDate, endDate);
 		
 		Insert.insertSleep(DeviceInfo.getDeviceId(userID, Device.fitbit), example);
+	}
+	public static void getAndPrintExampleHRs(String userID, String fitbitID, String aToken, Date startDate, Date endDate){
+		ArrayList<ArrayList<HeartRate>> example = HRPerMinute.getHRs(fitbitID, aToken, startDate, endDate);
+		
+		Insert.insertHRPM(DeviceInfo.getDeviceId(userID, Device.fitbit), example);
 	}
 }
