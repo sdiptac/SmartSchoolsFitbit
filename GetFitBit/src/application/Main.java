@@ -27,9 +27,9 @@ public class Main {
 			users.stream().forEach(user -> {
 				try {
 					//getAndPrintExampleActivities(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
-					getAndPrintExampleSleeps(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
+					//getAndPrintExampleSleeps(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
 					//Authorization.getMostRecentSync(user.getUserID());
-					//getAndPrintExampleHRs(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
+					getAndPrintExampleHRs(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
 				} catch (Exception e) {
 				}
 			});

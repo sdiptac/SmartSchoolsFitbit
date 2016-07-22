@@ -41,6 +41,7 @@ public class HRPerMinute extends GetInfoFromFitbit{
 		BufferedReader in = new BufferedReader(new InputStreamReader(getHttpURLConnectionFromURL(url, aToken).getInputStream()));
         
         String data = in.readLine();
+        System.out.println(data);
         in.close();
 
         final JSONObject intradayHeart = new JSONObject(data).getJSONObject("activities-heart-intraday");
