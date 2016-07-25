@@ -3,6 +3,7 @@ package application;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,10 +27,13 @@ public class Main {
 			ArrayList<UserProfile> users = Authorization.getAuthorization();
 			users.stream().forEach(user -> {
 				try {
-					//getAndPrintExampleActivities(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
-					//getAndPrintExampleSleeps(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
-					//Authorization.getMostRecentSync(user.getUserID());
-					getAndPrintExampleHRs(user.getUserID(), user.getfitbitID(), user.getToken(), SIMPLE_DATE_FORMATTER.parse(exampleStartDate), SIMPLE_DATE_FORMATTER.parse(exampleEndDate));
+					Calendar cal = Calendar.getInstance();
+					cal.add(Calendar.DATE, +1);
+					Date dayAfter = cal.getTime();
+					
+					getAndPrintExampleActivities(user.getUserID(), user.getfitbitID(), user.getToken(), Authorization.getMostRecentSync(user.getUserID()), dayAfter);
+					getAndPrintExampleSleeps(user.getUserID(), user.getfitbitID(), user.getToken(), Authorization.getMostRecentSync(user.getUserID()), dayAfter);		
+					getAndPrintExampleHRs(user.getUserID(), user.getfitbitID(), user.getToken(), Authorization.getMostRecentSync(user.getUserID()), dayAfter);
 				} catch (Exception e) {
 				}
 			});

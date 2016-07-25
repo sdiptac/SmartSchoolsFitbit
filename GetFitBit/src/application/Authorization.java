@@ -2,10 +2,10 @@ package application;
 
 
 import java.sql.*;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class Authorization {
@@ -45,11 +45,17 @@ public class Authorization {
 			ResultSet resultset = statement.executeQuery();
 			String date;
 			if(!resultset.next()){
-				return new java.util.Date();
+				Connector.disconnect();
+				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.DATE, -1);
+				Date dayBefore = cal.getTime();
+				return dayBefore;
         	}else{
         		date = resultset.getString(1);
         	}
+
 			if(date != null && !date.isEmpty()){
+				Connector.disconnect();
 				return Main.SIMPLE_DATE_FORMATTER.parse(date);
 			}
 		} catch (SQLException e) {
