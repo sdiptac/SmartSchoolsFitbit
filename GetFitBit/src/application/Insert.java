@@ -2,9 +2,12 @@ package application;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 public class Insert {
+	private static final String updateQuery = "update dailyActivity set calories = ?, stepCount = ?, floors = ?, restingHR = ? where dayOfActivity = ? and deviceID = ?";
+	
 	public static void insertDailyActivity(int deviceId, ArrayList<Activity> activityArray){
 		Connector.connect();
 		for (Activity e : activityArray){
@@ -25,10 +28,25 @@ public class Insert {
 				statement.setString(6, date);
 				if(statement.executeUpdate() == 1){
 					System.out.println("uploaded");
-				}else{
-					System.out.println("could not upload");
 				}
 				
+			}catch(SQLIntegrityConstraintViolationException eee){
+				PreparedStatement statement2;
+				try {
+					statement2 = Connector.connection.prepareStatement(updateQuery);
+					statement2.setInt(1, calories);
+					statement2.setInt(2, steps);
+					statement2.setInt(3, floors);
+					statement2.setInt(4, restingHeartRate);
+					statement2.setString(5, date);
+					statement2.setInt(6, deviceId);
+					statement2.executeUpdate();
+					System.out.println("updated daily ativity");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.out.println("updated daily activity");
 			} catch (SQLException ex) {
 				System.out.println("insertDailyActivity() " + ex.toString());
 			}
