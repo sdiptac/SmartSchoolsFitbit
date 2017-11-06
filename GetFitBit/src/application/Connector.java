@@ -3,9 +3,9 @@ package application;
 import java.sql.*;
 
 public class Connector {
-	private static final String url = "jdbc:mysql://lusmartschools.cs0aas51ervf.us-east-1.rds.amazonaws.com/ssdb";
+	private static final String url = ""; //insert url
 	private static final String user = "admin";
-	private static final String password = "coolsmartschools";
+	private static final String password = ""; //insert password
 	public static Connection connection = null;
 	
 	public static boolean connect(){
